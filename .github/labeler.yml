@@ -1,0 +1,6 @@
+backend:
+  - backend/**
+frontend:
+  - frontend/**
+docs:
+  - docs/**
