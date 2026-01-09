@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: erp-backend-dev
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+      - "9229:9229"  # Node.js debugging port
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - LOCALDATABASE_PATH=${LOCALDATABASE_PATH:-/app/data/app.db}
+      - API_KEY=${API_KEY:-dev-api-key}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules  # Prevent overwriting node_modules
+      - backend-data-dev:/app/data
+    command: node --inspect=0.0.0.0:9229 index.js
+    restart: unless-stopped
+    networks:
+      - erp-network
+
+volumes:
+  backend-data-dev:
+    driver: local
+
+networks:
+  erp-network:
+    driver: bridge
