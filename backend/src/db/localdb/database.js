@@ -18,7 +18,8 @@ function initializeDatabase() {
       username TEXT NOT NULL,
       password_hash TEXT NOT NULL,
       email TEXT UNIQUE NOT NULL,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      is_admin BOOLEAN DEFAULT 0 NOT NULL
     )
   `);
 }
